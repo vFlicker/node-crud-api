@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    /* Basic Options */
+    "lib": ["ESNext"],
+    "target": "ESNext",
+    "module": "CommonJS",
+
+    /* Type Checking*/
+    "strict": true,
+
+    /* Module Resolution Options */
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
+
+    /* Advanced Options  */
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Emit Options */
+    "outDir": "./dist"
+  },
+  "include": ["./src"],
+  "exclude": ["node_modules"]
+}
