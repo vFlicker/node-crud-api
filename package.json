@@ -5,8 +5,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start:dev": "nodemon",
-    "start:prod": "tsc && node dist/server.js"
+    "start:dev": "nodemon --exec ts-node ./src/server.ts",
+    "start:prod": "tsc && node dist/server.js",
+    "start:inspect": "nodemon --exec \"node --require ts-node/register --inspect src/server.ts\""
   },
   "dependencies": {},
   "devDependencies": {
