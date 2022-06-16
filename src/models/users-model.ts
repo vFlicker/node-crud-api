@@ -1,6 +1,6 @@
 import { v4 as getId, validate } from 'uuid'
 
-import { User } from '../types'
+import { User, UserData } from '../types'
 import { addUserValidate } from '../utils'
 
 export default class UsersModel {
@@ -10,7 +10,7 @@ export default class UsersModel {
     return new Promise((resolve) => resolve(this.users))
   }
 
-  getUser = async (id: string) => {
+  getUser = async (id: string): Promise<User> => {
     return new Promise((resolve, reject) => {
       const user = this.users.find((user) => user.id === id)
 
@@ -32,7 +32,7 @@ export default class UsersModel {
     })
   }
 
-  addUser = async (user: Omit<User, 'id'>) => {
+  addUser = async (user: UserData) => {
     return new Promise((resolve, reject) => {
       if (addUserValidate(user)) {
         return reject({
@@ -44,6 +44,19 @@ export default class UsersModel {
       const newUser = { id: getId(), ...user }
       this.users = [...this.users, newUser]
       resolve(newUser)
+    })
+  }
+
+  updateUser = async (id: string, user: UserData) => {
+    return new Promise((resolve) => {
+      const index = this.users.findIndex((user) => user.id === id)
+      const updatedUser = { id, ...user }
+      this.users = [
+        ...this.users.slice(0, index),
+        updatedUser,
+        ...this.users.slice(index + 1),
+      ]
+      resolve(updatedUser)
     })
   }
 }

@@ -17,6 +17,9 @@ const server = http.createServer((req, res) => {
     userController.getUser(req, res, id)
   } else if (req.url === '/api/users' && req.method === 'POST') {
     userController.addUser(req, res)
+  } else if (req.url?.match(/\/api\/users\/\w+/) && req.method === 'PUT') {
+    const id = req.url.split('/')[3]
+    userController.updateUser(req, res, id)
   } else {
     res.writeHead(404, { 'Content-Type': 'application/json' })
     res.end(JSON.stringify({ message: 'Route not found' }))

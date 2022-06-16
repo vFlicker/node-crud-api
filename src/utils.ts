@@ -1,8 +1,8 @@
 import { IncomingMessage } from 'http'
 
-import { User } from './types'
+import { UserData } from './types'
 
-export const addUserValidate = (user: Omit<User, 'id'>) => {
+export const addUserValidate = (user: UserData) => {
   if (
     typeof user.username !== 'string' ||
     typeof user.age !== 'number' ||
@@ -14,7 +14,7 @@ export const addUserValidate = (user: Omit<User, 'id'>) => {
   return false
 }
 
-export const getPostData = (req: IncomingMessage) => {
+export const getBodyData = (req: IncomingMessage): Promise<string> => {
   return new Promise((resolve, reject) => {
     let body = ''
     req.on('data', (chunk) => (body += chunk))
