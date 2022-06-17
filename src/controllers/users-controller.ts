@@ -62,4 +62,17 @@ export default class UserController {
       res.end(JSON.stringify(message))
     }
   }
+
+  deleteUser = async (_: IncomingMessage, res: ServerResponse, id: string) => {
+    try {
+      await this.model.getUser(id)
+      await this.model.deleteUser(id)
+      res.writeHead(204, { 'Content-Type': 'application/json' })
+      res.end()
+    } catch (err) {
+      const { status, message } = err as Error
+      res.writeHead(status, { 'Content-Type': 'application/json' })
+      res.end(JSON.stringify(message))
+    }
+  }
 }

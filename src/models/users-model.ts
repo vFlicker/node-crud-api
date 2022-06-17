@@ -59,4 +59,15 @@ export default class UsersModel {
       resolve(updatedUser)
     })
   }
+
+  deleteUser = async (id: string) => {
+    return new Promise((resolve) => {
+      const index = this.users.findIndex((user) => user.id === id)
+      this.users = [
+        ...this.users.slice(0, index),
+        ...this.users.slice(index + 1),
+      ]
+      resolve({ message: 'User deleted' })
+    })
+  }
 }
