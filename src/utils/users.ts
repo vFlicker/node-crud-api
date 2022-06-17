@@ -1,6 +1,6 @@
 import { UserData } from '../types'
 
-export const addUserValidate = (user: UserData) => {
+export const userValidate = (user: UserData) => {
   if (
     typeof user.username !== 'string' ||
     typeof user.age !== 'number' ||
