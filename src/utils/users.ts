@@ -1,4 +1,10 @@
+import { validate, version } from 'uuid'
+
 import { UserData } from '../types'
+
+export const isUuidValidate = (uuid: string): boolean => {
+  return validate(uuid) && version(uuid) === 4
+}
 
 export const isUserValidate = (user: UserData) => {
   if (

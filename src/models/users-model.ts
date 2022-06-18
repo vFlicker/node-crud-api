@@ -1,7 +1,7 @@
-import { v4 as getId, validate as idValidate } from 'uuid'
+import { v4 as getId } from 'uuid'
 
 import { User, UserData } from '../types'
-import { isUserValidate } from '../utils'
+import { isUuidValidate, isUserValidate } from '../utils'
 
 export default class UsersModel {
   constructor(private users: User[]) {}
@@ -14,7 +14,7 @@ export default class UsersModel {
     return new Promise((resolve, reject) => {
       const user = this.users.find((user) => user.id === id)
 
-      if (idValidate(id) && !user) {
+      if (isUuidValidate(id) && !user) {
         return reject({
           status: 404,
           message: `User with id ${id} not found`,
