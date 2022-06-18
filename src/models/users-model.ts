@@ -1,7 +1,7 @@
 import { v4 as getId, validate as idValidate } from 'uuid'
 
 import { User, UserData } from '../types'
-import { userValidate } from '../utils'
+import { isUserValidate } from '../utils'
 
 export default class UsersModel {
   constructor(private users: User[]) {}
@@ -14,17 +14,17 @@ export default class UsersModel {
     return new Promise((resolve, reject) => {
       const user = this.users.find((user) => user.id === id)
 
-      if (!idValidate(id)) {
+      if (idValidate(id) && !user) {
         return reject({
-          status: 400,
-          message: `User id "${id}" is invalid (not uuid)`,
+          status: 404,
+          message: `User with id "${id}" not found`,
         })
       }
 
       if (!user) {
         return reject({
-          status: 404,
-          message: `User with id "${id}" not found`,
+          status: 400,
+          message: `User id "${id}" is invalid (not uuid)`,
         })
       }
 
@@ -34,14 +34,19 @@ export default class UsersModel {
 
   addUser = async (user: UserData) => {
     return new Promise((resolve, reject) => {
-      if (userValidate(user)) {
+      if (!isUserValidate(user)) {
         return reject({
           status: 400,
           message: 'User is missing required fields',
         })
       }
 
-      const newUser = { id: getId(), ...user }
+      const newUser = {
+        id: getId(),
+        username: user.username,
+        age: user.age,
+        hobbies: user.hobbies,
+      }
       this.users = [...this.users, newUser]
       resolve(newUser)
     })

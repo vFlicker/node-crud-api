@@ -1,10 +1,10 @@
 import { UserData } from '../types'
 
-export const userValidate = (user: UserData) => {
+export const isUserValidate = (user: UserData) => {
   if (
-    typeof user.username !== 'string' ||
-    typeof user.age !== 'number' ||
-    !Array.isArray(user.hobbies)
+    typeof user.username === 'string' &&
+    typeof user.age === 'number' &&
+    Array.isArray(user.hobbies)
   ) {
     return true
   }

@@ -17,7 +17,7 @@
     "forceConsistentCasingInFileNames": true,
 
     /* Emit Options */
-    "outDir": "./dist"
+    "outDir": "./build"
   },
   "include": ["./src"],
   "exclude": ["node_modules"]

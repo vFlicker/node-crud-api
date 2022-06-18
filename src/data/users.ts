@@ -1,10 +1,8 @@
-import { v4 as getId } from 'uuid'
-
 import { User } from '../types'
 
 export const users: User[] = [
   {
-    id: getId(),
+    id: 'c145dcf1-ed01-4cbf-9603-470a96e44aa8',
     username: 'Bob',
     age: 99,
     hobbies: ['sport', 'music'],
