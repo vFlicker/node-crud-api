@@ -21,7 +21,7 @@ export default class UserController {
     } catch (err) {
       const { status, message } = err as Error
       res.writeHead(status, { 'Content-Type': 'application/json' })
-      res.end(JSON.stringify(message))
+      res.end(JSON.stringify({ message: message }))
     }
   }
 
@@ -35,7 +35,7 @@ export default class UserController {
     } catch (err) {
       const { status, message } = err as Error
       res.writeHead(status, { 'Content-Type': 'application/json' })
-      res.end(JSON.stringify(message))
+      res.end(JSON.stringify({ message: message }))
     }
   }
 
@@ -59,7 +59,7 @@ export default class UserController {
     } catch (err) {
       const { status, message } = err as Error
       res.writeHead(status, { 'Content-Type': 'application/json' })
-      res.end(JSON.stringify(message))
+      res.end(JSON.stringify({ message: message }))
     }
   }
 
@@ -72,7 +72,7 @@ export default class UserController {
     } catch (err) {
       const { status, message } = err as Error
       res.writeHead(status, { 'Content-Type': 'application/json' })
-      res.end(JSON.stringify(message))
+      res.end(JSON.stringify({ message: message }))
     }
   }
 }

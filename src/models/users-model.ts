@@ -17,14 +17,14 @@ export default class UsersModel {
       if (idValidate(id) && !user) {
         return reject({
           status: 404,
-          message: `User with id "${id}" not found`,
+          message: `User with id ${id} not found`,
         })
       }
 
       if (!user) {
         return reject({
           status: 400,
-          message: `User id "${id}" is invalid (not uuid)`,
+          message: `User id ${id} is invalid (not uuid)`,
         })
       }
 
