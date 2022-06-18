@@ -1,7 +1,8 @@
 import { createServer } from './server'
 import { users } from './data/users'
 
-const PORT = process.env.PORT || 3000
+const port = 8000
+const hostname = '127.0.0.1'
 
 const server = createServer(users)
-server.listen(PORT, () => console.log(`Listening on port ${PORT}`))
+server.listen(port, hostname, () => console.log(`Listening on port ${port}`))
