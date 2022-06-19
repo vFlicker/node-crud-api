@@ -95,7 +95,7 @@ describe('The 2 test scenario', () => {
   const server = createServer(initialData)
 
   beforeAll((done) => {
-    server.listen(port, hostname, () => done())
+    server.listen(PORT, HOSTNAME, () => done())
   })
 
   afterAll((done) => {
@@ -169,7 +169,7 @@ describe('The 3 test scenario', () => {
   const server = createServer(initialData)
 
   beforeAll((done) => {
-    server.listen(port, hostname, () => done())
+    server.listen(PORT, HOSTNAME, () => done())
   })
 
   afterAll((done) => {
