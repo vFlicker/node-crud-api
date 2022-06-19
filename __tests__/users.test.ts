@@ -5,12 +5,10 @@ import request from 'supertest'
 import { createServer } from '../src/server'
 import { User } from '../src/types'
 
-config({
-  path: path.resolve(process.cwd(), `.env.${process.env.NODE_ENV}`),
-})
+config({ path: path.resolve(process.cwd(), `.env.${process.env.NODE_ENV}`) })
 
-const port = (process.env.PORT || 3000) as number
-const hostname = process.env.HOST_NAME || 'localhost'
+const PORT = (process.env.PORT || 3000) as number
+const HOSTNAME = process.env.HOST_NAME || 'localhost'
 
 describe('The 1 test scenario', () => {
   const user = {
@@ -24,7 +22,7 @@ describe('The 1 test scenario', () => {
   const server = createServer(initialData)
 
   beforeAll((done) => {
-    server.listen(port, hostname, () => done())
+    server.listen(PORT, HOSTNAME, () => done())
   })
 
   afterAll((done) => {
