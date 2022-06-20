@@ -4,6 +4,12 @@
 2. Deadline date: 2022-06-19 23:59
 3. Score score: 202
 
+### Downloading
+
+```
+git clone {repository URL}
+```
+
 ### Installing
 
 ```
@@ -12,10 +18,25 @@ npm install
 
 ### Running application
 
-- `npm run start:multi` start multiple instances of the application using the Node.js Cluster API
-- `npm run start:dev` start application in development mode
-- `npm run start:prod` start application in production mode
+To run the application in cluster mode
+```
+npm run start:multi
+```
+
+To run the application in production mode
+```
+npm run start:prod
+```
+
+To run the application in development mode
+```
+npm run start:dev
+```
 
 ### Testing
 
-- `npm test` start all tests for application
+To run all tests
+
+```
+npm test
+```
