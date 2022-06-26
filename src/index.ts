@@ -1,15 +1,11 @@
-import path from 'path'
-import { config } from 'dotenv'
-
+import { config } from './config'
 import { createServer } from './server'
 import { users } from './data/users'
 import { createProcesses } from './cluster'
 
-config({ path: path.resolve(process.cwd(), `.env.${process.env.NODE_ENV}`) })
-
-const PORT = (process.env.PORT || 3000) as number
-const HOSTNAME = process.env.HOST_NAME || 'localhost'
-const isMulti = process.env.MULTI
+const PORT = config.PORT || 3000
+const HOSTNAME = config.HOST_NAME || 'localhost'
+const isMulti = config.MULTI
 
 const workerHandler = () => {
   server.listen(PORT, HOSTNAME, () => {

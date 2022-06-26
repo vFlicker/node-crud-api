@@ -1,14 +1,11 @@
-import path from 'path'
-import { config } from 'dotenv'
 import request from 'supertest'
 
+import { config } from '../config'
 import { createServer } from '../src/server'
 import { User } from '../src/types'
 
-config({ path: path.resolve(process.cwd(), `.env.${process.env.NODE_ENV}`) })
-
-const PORT = (process.env.PORT || 3000) as number
-const HOSTNAME = process.env.HOST_NAME || 'localhost'
+const PORT = config.PORT || 3000
+const HOSTNAME = config.HOST_NAME || 'localhost'
 
 describe('The 1 test scenario', () => {
   const user = {
