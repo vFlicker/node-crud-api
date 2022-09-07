@@ -1,6 +1,8 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { StatusCodes } from 'http-status-codes';
 
+import { Logger } from './logger';
+
 type Method = string;
 
 type Callback = (req: IncomingMessage, res: ServerResponse) => void;
@@ -12,6 +14,8 @@ type Routes = Record<Method, Resolver>;
 const HEADERS = { 'Content-Type': 'application/json' };
 
 export class Router {
+  private logger = new Logger();
+
   private routes = {
     GET: {},
     POST: {},
@@ -37,7 +41,8 @@ export class Router {
 
     try {
       await this.routes[method][url](req, res);
-    } catch (error) {
+    } catch (err) {
+      this.logger.error(err);
       res.writeHead(StatusCodes.INTERNAL_SERVER_ERROR, HEADERS);
       res.end(JSON.stringify({ message: 'Something went wrong' }));
     }
