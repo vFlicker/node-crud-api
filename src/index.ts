@@ -1,11 +1,16 @@
 import { config } from './config';
-import { createServer } from './server';
+import { UserController } from './controllers';
+import { Application } from './core';
+import { UserModel } from './models';
 
-const PORT = config.PORT || 3000;
-const HOSTNAME = config.HOST_NAME || 'localhost';
+const port = config.PORT || 3000;
+const hostname = config.HOST_NAME || 'localhost';
 
-const server = createServer();
+const app = new Application({ port, hostname });
 
-server.listen(PORT, HOSTNAME, () => {
-  console.log(`Listening on port: http://${HOSTNAME}:${PORT}`);
-});
+const userController = new UserController(new UserModel());
+
+app.router.post('/api/users', userController.create);
+app.router.get('/api/users', userController.findAll);
+
+app.run();

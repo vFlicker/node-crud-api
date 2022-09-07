@@ -1,3 +1,3 @@
 export const userRoutes = {
-  getAll: '/users',
+  getAll: '/api/users',
 };
