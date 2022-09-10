@@ -6,22 +6,22 @@ import { Controller } from '../framework';
 import { UserDto, UserModel } from '../models';
 
 export class UserController extends Controller {
-  userModel = new UserModel();
-
   create = async (req: IncomingMessage, res: ServerResponse) => {
+    const userModel = new UserModel();
     const userDto = await this.bodyParser<UserDto>(req);
-    this.userModel.loadData(userDto);
+    userModel.loadData(userDto);
 
-    if (!this.userModel.validate()) {
-      throw new ValidationError(this.userModel.errors);
+    if (!userModel.validate()) {
+      throw new ValidationError(userModel.errors);
     }
 
-    const newUser = await this.userModel.create(userDto);
+    const newUser = await userModel.create(userDto);
     this.send(res, StatusCodes.CREATED, newUser);
   };
 
   findAll = async (_: IncomingMessage, res: ServerResponse) => {
-    const users = await this.userModel.findAll();
+    const userModel = new UserModel();
+    const users = await userModel.findAll();
     this.send(res, StatusCodes.OK, users);
   };
 }

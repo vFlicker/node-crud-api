@@ -6,7 +6,7 @@ import { request } from './lib';
 
 const createUserDto = {
   username: 'TEST_NAME',
-  age: 16,
+  age: 18,
   hobbies: ['hobby_1', 'hobby_2'],
 };
 
@@ -28,6 +28,26 @@ describe('api/users', () => {
       expect(username).toBe(createUserDto.username);
       expect(age).toBe(createUserDto.age);
       expect(hobbies.length).toBe(2);
+    });
+
+    it('should respond with BAD_REQUEST in case of invalid required data', async () => {
+      const responses = await Promise.all([
+        request.post(userRoutes.create).set(commonHeaders).send({}),
+        request
+          .post(userRoutes.create)
+          .set(commonHeaders)
+          .send({ username: 'TEST_NAME', age: 18, hobbies: '' }),
+        request
+          .post(userRoutes.create)
+          .set(commonHeaders)
+          .send({ username: 'TEST_NAME', age: '18', hobbies: [] }),
+      ]);
+
+      expect(
+        responses.map(
+          ({ statusCode }) => statusCode === StatusCodes.BAD_REQUEST,
+        ),
+      ).toStrictEqual([true, true, true]);
     });
   });
 
