@@ -1,5 +1,4 @@
-import { v4 as generateId } from 'uuid';
-
+import { Database } from '../database';
 import { Model, Rule } from '../framework';
 
 export type User = {
@@ -16,26 +15,19 @@ export type UserDto = {
 };
 
 export class UserModel extends Model {
-  users = [] as User[];
+  private readonly database = Database.create();
 
   username = '';
   age = null;
   hobbies = [];
 
-  create = async (userDto: UserDto): Promise<User> => {
-    const newUser = {
-      id: generateId(),
-      ...userDto,
-    };
+  async create(userDto: UserDto): Promise<User> {
+    return this.database.addUser(userDto);
+  }
 
-    this.users = [...this.users, newUser];
-
-    return newUser;
-  };
-
-  findAll = async (): Promise<User[]> => {
-    return this.users;
-  };
+  async findAll(): Promise<User[]> {
+    return this.database.getAllUsers();
+  }
 
   protected rules() {
     return {
