@@ -16,7 +16,8 @@ export class Application {
     const { port, hostname } = this.config;
 
     http.createServer(this.router.resolve).listen(port, hostname, () => {
-      console.log(`Listening on port: http://${hostname}:${port}`);
+      const serverAddress = `http://${hostname}:${port}`;
+      console.log(`Listening on port: ${serverAddress}`);
     });
   }
 }

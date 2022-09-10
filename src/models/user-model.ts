@@ -1,5 +1,7 @@
 import { v4 as generateId } from 'uuid';
 
+import { Model, Rule } from '../framework/model';
+
 export type User = {
   id: string;
   username: string;
@@ -13,8 +15,12 @@ export type UserDto = {
   hobbies: string[];
 };
 
-export class UserModel {
-  private users = [] as User[];
+export class UserModel extends Model {
+  users = [] as User[];
+
+  username = '';
+  age = null;
+  hobbies = [];
 
   create = async (userDto: UserDto): Promise<User> => {
     const newUser = {
@@ -30,4 +36,23 @@ export class UserModel {
   findAll = async (): Promise<User[]> => {
     return this.users;
   };
+
+  protected rules() {
+    return {
+      username: {
+        [Rule.Required]: true,
+        [Rule.String]: true,
+      },
+      age: {
+        [Rule.Required]: true,
+        [Rule.Number]: true,
+        [Rule.Max]: 60,
+        [Rule.Min]: 18,
+      },
+      hobbies: {
+        [Rule.Required]: true,
+        [Rule.Array]: true,
+      },
+    };
+  }
 }

@@ -1,6 +1,7 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { StatusCodes } from 'http-status-codes';
 
+import { ValidationError } from '../errors';
 import { Logger } from './logger';
 
 type Method = string;
@@ -43,6 +44,13 @@ export class Router {
       await this.routes[method][url](req, res);
     } catch (err) {
       this.logger.error(err);
+
+      if (err instanceof ValidationError) {
+        res.writeHead(err.code, HEADERS);
+        res.end(JSON.stringify({ message: err.errors }));
+        return;
+      }
+
       res.writeHead(StatusCodes.INTERNAL_SERVER_ERROR, HEADERS);
       res.end(JSON.stringify({ message: 'Something went wrong' }));
     }

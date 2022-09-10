@@ -10,7 +10,7 @@ export class Logger {
   };
 
   log(text: any) {
-    console.log(this.paintOverText(text, Colors.Info));
+    console.info(this.paintOverText(text, Colors.Info));
   }
 
   warn(text: any) {
