@@ -1,6 +1,6 @@
 import { v4 as generateId } from 'uuid';
 
-import { Model, Rule } from '../framework/model';
+import { Model, Rule } from '../framework';
 
 export type User = {
   id: string;

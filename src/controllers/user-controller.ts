@@ -2,7 +2,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { StatusCodes } from 'http-status-codes';
 
 import { ValidationError } from '../errors';
-import { Controller } from '../framework/controller';
+import { Controller } from '../framework';
 import { UserDto, UserModel } from '../models';
 
 export class UserController extends Controller {

@@ -1,6 +1,6 @@
 import { config } from './config';
 import { UserController } from './controllers';
-import { Application } from './core';
+import { Application } from './framework';
 
 const port = config.PORT || 3000;
 const hostname = config.HOST_NAME || 'localhost';
