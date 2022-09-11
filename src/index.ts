@@ -11,5 +11,6 @@ const userController = new UserController();
 
 app.router.post('/api/users', userController.create);
 app.router.get('/api/users', userController.findAll);
+app.router.get('/api/users/:id', userController.findOneById);
 
 app.run();

@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
-import { User } from '../src/models';
 
+import { User } from '../src/models';
 import { userRoutes } from './endpoints';
 import { request } from './lib';
 
@@ -56,6 +56,30 @@ describe('api/users', () => {
       const response = await request.get(userRoutes.getAll).set(commonHeaders);
       expect(response.status).toBe(StatusCodes.OK);
       expect(response.body).toBeInstanceOf(Array);
+    });
+
+    it('should correctly get user by id', async () => {
+      const creationResponse = await request
+        .post(userRoutes.create)
+        .set(commonHeaders)
+        .send(createUserDto);
+
+      const creationResponseBody = creationResponse.body as User;
+
+      expect(creationResponse.status).toBe(StatusCodes.CREATED);
+
+      const searchResponse = await request
+        .get(userRoutes.getOneById(creationResponseBody.id))
+        .set(commonHeaders);
+
+      const { id, username, age, hobbies } = searchResponse.body as User;
+
+      expect(searchResponse.statusCode).toBe(StatusCodes.OK);
+
+      expect(typeof id).toBe('string');
+      expect(username).toBe(createUserDto.username);
+      expect(age).toBe(createUserDto.age);
+      expect(hobbies.length).toBe(2);
     });
   });
 });

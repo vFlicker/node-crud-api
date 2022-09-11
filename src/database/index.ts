@@ -1,5 +1,6 @@
 import { v4 as generateId } from 'uuid';
 
+import { NotFoundError } from '../errors';
 import { User, UserDto } from '../models';
 
 type Data = {
@@ -30,6 +31,15 @@ export class Database {
 
   async getAllUsers(): Promise<User[]> {
     return this.data.users;
+  }
+
+  async findOneById(id: string): Promise<User> {
+    const users = this.data.users;
+    const user = users.find((user) => user.id === id);
+
+    if (!user) throw new NotFoundError(`User with id ${id} not found`);
+
+    return user;
   }
 
   static create(): Database {

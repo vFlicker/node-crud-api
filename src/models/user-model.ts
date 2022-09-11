@@ -29,6 +29,10 @@ export class UserModel extends Model {
     return this.database.getAllUsers();
   }
 
+  async findOneById(id: string): Promise<User> {
+    return this.database.findOneById(id);
+  }
+
   protected rules() {
     return {
       username: {
