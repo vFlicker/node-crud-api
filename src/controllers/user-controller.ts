@@ -30,6 +30,19 @@ export class UserController extends Controller {
     this.send(res, StatusCodes.OK, user);
   };
 
+  update = async (req: Request, res: Response) => {
+    const userModel = new UserModel();
+    const userDto = await this.bodyParser<UserDto>(req);
+    userModel.loadData(userDto);
+
+    if (!userModel.validate()) {
+      throw new ValidationError(userModel.errors);
+    }
+
+    const newUser = await userModel.update(req.params.id, userDto);
+    this.send(res, StatusCodes.OK, newUser);
+  };
+
   remove = async (req: Request, res: Response) => {
     const userModel = new UserModel();
     await userModel.remove(req.params.id);

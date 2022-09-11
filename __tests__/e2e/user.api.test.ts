@@ -79,13 +79,13 @@ describe('api/users', () => {
         .set(commonHeaders)
         .send(createUserDto);
 
-      const creationResponseBody = creationResponse.body as User;
+      const { id: createdId } = creationResponse.body as User;
 
       expect(creationResponse.status).toBe(StatusCodes.CREATED);
 
       // Search
       const searchResponse = await request
-        .get(userRoutes.getOneById(creationResponseBody.id))
+        .get(userRoutes.getOneById(createdId))
         .set(commonHeaders);
 
       const { id, username, age, hobbies } = searchResponse.body as User;
@@ -112,6 +112,54 @@ describe('api/users', () => {
         .set(commonHeaders);
 
       expect(searchResponse.statusCode).toBe(StatusCodes.NOT_FOUND);
+    });
+  });
+
+  describe('PUT', () => {
+    it('should correctly update user password match', async () => {
+      // Create
+      const creationResponse = await request
+        .post(userRoutes.create)
+        .set(commonHeaders)
+        .send(createUserDto);
+
+      const { id: createdId, ...user } = creationResponse.body as User;
+
+      expect(creationResponse.status).toBe(StatusCodes.CREATED);
+
+      // Update
+      const updateResponse = await request
+        .put(userRoutes.update(createdId))
+        .set(commonHeaders)
+        .send({
+          ...user,
+          username: 'NEW_NAME',
+        });
+
+      const { id, username, age, hobbies } = updateResponse.body as User;
+
+      expect(updateResponse.statusCode).toBe(StatusCodes.OK);
+
+      expect(id).toBe(createdId);
+      expect(username).toBe(createUserDto.username);
+      expect(age).toBe(createUserDto.age);
+      expect(hobbies).toStrictEqual(createUserDto.hobbies);
+
+      // Delete
+      const cleanupResponse = await request
+        .delete(userRoutes.delete(createdId))
+        .set(commonHeaders);
+
+      expect(cleanupResponse.statusCode).toBe(StatusCodes.NO_CONTENT);
+    });
+
+    it("should respond with NOT_FOUND status code in case if user doesn't exist", async () => {
+      const response = await request
+        .put(userRoutes.update(nonExistentId))
+        .set(commonHeaders)
+        .send(createUserDto);
+
+      expect(response.status).toBe(StatusCodes.NOT_FOUND);
     });
   });
 

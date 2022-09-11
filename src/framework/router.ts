@@ -21,6 +21,7 @@ export class Router {
   private routes = {
     POST: {},
     GET: {},
+    PUT: {},
     DELETE: {},
   } as Routes;
 
@@ -30,6 +31,10 @@ export class Router {
 
   get(url: string, callback: Callback): void {
     this.routes.GET[trimSlash(url)] = callback;
+  }
+
+  put(url: string, callback: Callback): void {
+    this.routes.PUT[trimSlash(url)] = callback;
   }
 
   delete(url: string, callback: Callback): void {

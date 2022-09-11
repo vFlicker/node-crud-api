@@ -17,10 +17,10 @@ export class Database {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
-  async addUser(user: UserDto): Promise<User> {
+  async addUser(dto: UserDto): Promise<User> {
     const newUser = {
       id: generateId(),
-      ...user,
+      ...dto,
     };
 
     this.data.users = [...this.data.users, newUser];
@@ -40,6 +40,21 @@ export class Database {
     if (!user) throw new NotFoundError(`User with id ${id} not found`);
 
     return user;
+  }
+
+  async updateUser(id: string, dto: UserDto): Promise<User> {
+    const users = this.data.users;
+    const index = users.findIndex((user) => user.id === id);
+
+    if (index === -1) throw new NotFoundError("Can't delete unexisting user");
+
+    this.data.users = [
+      ...users.slice(0, index),
+      { id, ...dto },
+      ...users.slice(index + 1),
+    ];
+
+    return users[index];
   }
 
   async removeUser(id: string): Promise<void> {

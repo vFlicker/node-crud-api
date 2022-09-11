@@ -21,8 +21,8 @@ export class UserModel extends Model {
   age = null;
   hobbies = [];
 
-  async create(userDto: UserDto): Promise<User> {
-    return this.database.addUser(userDto);
+  async create(dto: UserDto): Promise<User> {
+    return this.database.addUser(dto);
   }
 
   async findAll(): Promise<User[]> {
@@ -31,6 +31,10 @@ export class UserModel extends Model {
 
   async findOneById(id: string): Promise<User> {
     return this.database.findOneById(id);
+  }
+
+  async update(id: string, dto: UserDto): Promise<User> {
+    return this.database.updateUser(id, dto);
   }
 
   async remove(id: string): Promise<void> {

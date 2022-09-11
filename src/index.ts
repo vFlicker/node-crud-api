@@ -12,6 +12,7 @@ const userController = new UserController();
 app.router.post('/api/users', userController.create);
 app.router.get('/api/users', userController.findAll);
 app.router.get('/api/users/:id', userController.findOneById);
+app.router.put('/api/users/:id', userController.update);
 app.router.delete('/api/users/:id', userController.remove);
 
 app.run();
