@@ -11,6 +11,7 @@ const createUserDto = {
 };
 
 const nonExistentId = 'non-existent-id';
+const randomUuidV4 = '6ec0bd7f-11c0-43da-975e-2a8ad9ebae0b';
 
 describe('api/users', () => {
   const commonHeaders = { Accept: 'application/json' };
@@ -105,10 +106,18 @@ describe('api/users', () => {
       expect(cleanupResponse.statusCode).toBe(StatusCodes.NO_CONTENT);
     });
 
+    it('should respond with BAD_REQUEST status code in case of invalid id', async () => {
+      const response = await request
+        .get(userRoutes.getOneById(nonExistentId))
+        .set(commonHeaders);
+
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+    });
+
     it("should respond with NOT_FOUND status code in case if user doesn't exist", async () => {
       // Search
       const searchResponse = await request
-        .get(userRoutes.getOneById(nonExistentId))
+        .get(userRoutes.getOneById(randomUuidV4))
         .set(commonHeaders);
 
       expect(searchResponse.statusCode).toBe(StatusCodes.NOT_FOUND);
@@ -116,7 +125,7 @@ describe('api/users', () => {
   });
 
   describe('PUT', () => {
-    it('should correctly update user password match', async () => {
+    it('should correctly update username', async () => {
       // Create
       const creationResponse = await request
         .post(userRoutes.create)
@@ -153,9 +162,17 @@ describe('api/users', () => {
       expect(cleanupResponse.statusCode).toBe(StatusCodes.NO_CONTENT);
     });
 
+    it('should respond with BAD_REQUEST status code in case of invalid id', async () => {
+      const response = await request
+        .get(userRoutes.getOneById(nonExistentId))
+        .set(commonHeaders);
+
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+    });
+
     it("should respond with NOT_FOUND status code in case if user doesn't exist", async () => {
       const response = await request
-        .put(userRoutes.update(nonExistentId))
+        .put(userRoutes.update(randomUuidV4))
         .set(commonHeaders)
         .send(createUserDto);
 
@@ -190,10 +207,18 @@ describe('api/users', () => {
       expect(searchResponse.statusCode).toBe(StatusCodes.NOT_FOUND);
     });
 
+    it('should respond with BAD_REQUEST status code in case of invalid id', async () => {
+      const response = await request
+        .get(userRoutes.getOneById(nonExistentId))
+        .set(commonHeaders);
+
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+    });
+
     it("should respond with NOT_FOUND status code in case if user doesn't exist", async () => {
       // Create
       const cleanupResponse = await request
-        .delete(userRoutes.delete(nonExistentId))
+        .delete(userRoutes.delete(randomUuidV4))
         .set(commonHeaders);
 
       expect(cleanupResponse.status).toBe(StatusCodes.NOT_FOUND);

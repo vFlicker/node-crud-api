@@ -1,4 +1,6 @@
-import { Errors } from './errors';
+import { validate, version } from 'uuid';
+
+import { Errors, ValidationError } from './errors';
 
 export const enum Rule {
   Required = 'required',
@@ -67,6 +69,13 @@ export abstract class Model {
     }
 
     return !this.errors.length;
+  }
+
+  uuidV4Validate(uuid: string, errorMessage?: string): void {
+    const isValid = validate(uuid) && version(uuid) === 4;
+    if (!isValid) {
+      throw new ValidationError([errorMessage ?? `${uuid} isn't validate`]);
+    }
   }
 
   protected abstract rules(): Record<string, object>;
