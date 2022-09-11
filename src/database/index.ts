@@ -42,6 +42,15 @@ export class Database {
     return user;
   }
 
+  async removeUser(id: string): Promise<void> {
+    const users = this.data.users;
+    const index = users.findIndex((user) => user.id === id);
+
+    if (index === -1) throw new NotFoundError("Can't delete unexisting user");
+
+    this.data.users = [...users.slice(0, index), ...users.slice(index + 1)];
+  }
+
   static create(): Database {
     if (!Database.instance) {
       Database.instance = new Database();

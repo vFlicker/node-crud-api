@@ -14,7 +14,7 @@ export class Controller {
   protected send<T>(
     res: ServerResponse,
     statusCode: StatusCodes,
-    data: T,
+    data?: T,
     header = { 'Content-Type': 'application/json' },
   ): void {
     res.writeHead(statusCode, header);

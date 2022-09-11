@@ -33,6 +33,10 @@ export class UserModel extends Model {
     return this.database.findOneById(id);
   }
 
+  async remove(id: string): Promise<void> {
+    return this.database.removeUser(id);
+  }
+
   protected rules() {
     return {
       username: {

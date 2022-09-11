@@ -29,4 +29,10 @@ export class UserController extends Controller {
     const user = await userModel.findOneById(req.params.id);
     this.send(res, StatusCodes.OK, user);
   };
+
+  remove = async (req: Request, res: Response) => {
+    const userModel = new UserModel();
+    await userModel.remove(req.params.id);
+    this.send(res, StatusCodes.NO_CONTENT);
+  };
 }

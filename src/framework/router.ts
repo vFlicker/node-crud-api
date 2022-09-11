@@ -19,8 +19,9 @@ export class Router {
   private logger = new Logger();
 
   private routes = {
-    GET: {},
     POST: {},
+    GET: {},
+    DELETE: {},
   } as Routes;
 
   post(url: string, callback: Callback): void {
@@ -31,7 +32,44 @@ export class Router {
     this.routes.GET[trimSlash(url)] = callback;
   }
 
-  getCallback(req: Request): Callback | null {
+  delete(url: string, callback: Callback): void {
+    this.routes.DELETE[trimSlash(url)] = callback;
+  }
+
+  resolve = async (req: Request, res: Response) => {
+    const callback = this.getCallback(req);
+
+    if (!callback) {
+      res.writeHead(StatusCodes.NOT_FOUND, HEADERS);
+      res.end(JSON.stringify({ message: 'Route not found' }));
+      return;
+    }
+
+    try {
+      await callback(req, res);
+    } catch (err) {
+      this.logger.error(err);
+
+      if (err instanceof ValidationError) {
+        res.writeHead(err.code, HEADERS);
+        res.end(JSON.stringify({ message: err.errors }));
+        return;
+      }
+
+      if (err instanceof NotFoundError) {
+        const { code, message } = err;
+
+        res.writeHead(code, HEADERS);
+        res.end(JSON.stringify({ message }));
+        return;
+      }
+
+      res.writeHead(StatusCodes.INTERNAL_SERVER_ERROR, HEADERS);
+      res.end(JSON.stringify({ message: 'Something went wrong' }));
+    }
+  };
+
+  private getCallback(req: Request): Callback | null {
     if (!req.method || !req.url) return null;
 
     const method = req.method;
@@ -79,37 +117,4 @@ export class Router {
 
     return callback;
   }
-
-  resolve = async (req: Request, res: Response) => {
-    const callback = this.getCallback(req);
-
-    if (!callback) {
-      res.writeHead(StatusCodes.NOT_FOUND, HEADERS);
-      res.end(JSON.stringify({ message: 'Route not found' }));
-      return;
-    }
-
-    try {
-      await callback(req, res);
-    } catch (err) {
-      this.logger.error(err);
-
-      if (err instanceof ValidationError) {
-        res.writeHead(err.code, HEADERS);
-        res.end(JSON.stringify({ message: err.errors }));
-        return;
-      }
-
-      if (err instanceof NotFoundError) {
-        const { code, message } = err;
-
-        res.writeHead(code, HEADERS);
-        res.end(JSON.stringify({ message }));
-        return;
-      }
-
-      res.writeHead(StatusCodes.INTERNAL_SERVER_ERROR, HEADERS);
-      res.end(JSON.stringify({ message: 'Something went wrong' }));
-    }
-  };
 }
