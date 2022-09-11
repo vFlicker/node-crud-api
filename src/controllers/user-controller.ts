@@ -1,7 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 
-import { ValidationError } from '../errors';
-import { Controller, Request, Response } from '../framework';
+import { Controller, Request, Response, ValidationError } from '../framework';
 import { UserDto, UserModel } from '../models';
 
 export class UserController extends Controller {

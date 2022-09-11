@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 
-import { NotFoundError, ValidationError } from '../errors';
+import { NotFoundError, ValidationError } from './errors';
 import { Logger } from './logger';
 import { Request, Response } from './types';
 import { trimSlash } from './utils';

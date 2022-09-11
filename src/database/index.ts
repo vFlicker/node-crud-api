@@ -1,6 +1,6 @@
 import { v4 as generateId } from 'uuid';
 
-import { NotFoundError } from '../errors';
+import { NotFoundError } from '../framework';
 import { User, UserDto } from '../models';
 
 type Data = {
