@@ -1,8 +1,8 @@
 import { StatusCodes } from 'http-status-codes';
 
-import { User } from '../src/models';
-import { userRoutes } from './endpoints';
-import { request } from './lib';
+import { User } from '../../src/models';
+import { userRoutes } from '../endpoints';
+import { request } from '../lib';
 
 const createUserDto = {
   username: 'TEST_NAME',
