@@ -1,10 +1,10 @@
 import { StatusCodes } from 'http-status-codes';
 
-import { User } from '../../src/models';
+import { User, UserDto } from '../../src/models';
 import { userRoutes } from '../endpoints';
 import { request } from '../lib';
 
-const createUserDto = {
+const createUserDto: UserDto = {
   username: 'TEST_NAME',
   age: 18,
   hobbies: ['hobby_1', 'hobby_2'],
