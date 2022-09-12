@@ -1,6 +1,18 @@
 import { Database } from '../database';
 import { Model, Rule } from '../framework';
 
+/*
+  Now when we want update User, we should put all props of UserDto,
+  because our rules created for create method of Model, and not adapted
+  for update method where field can be not required.
+
+  Method rules of Model looks like class-validator in Next, and can be
+  moved on a separate layer.
+
+  Think about how it is possible to use such DTOs:
+  CreateUserDto, UpdateUserDto, UserViewDto.
+*/
+
 export type User = {
   id: string;
   username: string;
