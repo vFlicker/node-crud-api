@@ -55,10 +55,10 @@ describe('api/users', () => {
       ]);
 
       expect(
-        responses.map(
+        responses.every(
           ({ statusCode }) => statusCode === StatusCodes.BAD_REQUEST,
         ),
-      ).toStrictEqual([true, true, true]);
+      ).toBe(true);
     });
   });
 
