@@ -10,9 +10,9 @@ type Data = {
 export class Database {
   private static instance: Database;
 
-  private readonly data = {
+  private readonly data: Data = {
     users: [],
-  } as Data;
+  };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
