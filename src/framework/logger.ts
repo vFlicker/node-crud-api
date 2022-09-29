@@ -4,20 +4,20 @@ const enum Colors {
   Error = 31,
 }
 
-export class Logger {
-  private static paintOverText = (text: string, color: Colors) => {
-    return `\x1B[${color}m${text}\x1B[0m`;
-  };
+const paintOverText = (text: string, color: Colors) => {
+  return `\x1B[${color}m${text}\x1B[0m`;
+};
 
+export class Logger {
   info(text: any) {
-    console.info(Logger.paintOverText(text, Colors.Info));
+    console.info(paintOverText(text, Colors.Info));
   }
 
   warn(text: any) {
-    console.warn(Logger.paintOverText(text, Colors.Warning));
+    console.warn(paintOverText(text, Colors.Warning));
   }
 
   error(text: any) {
-    console.error(Logger.paintOverText(text, Colors.Error));
+    console.error(paintOverText(text, Colors.Error));
   }
 }

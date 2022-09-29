@@ -56,8 +56,10 @@ export class Router {
       this.logger.error(err);
 
       if (err instanceof ValidationError) {
-        res.writeHead(err.code, HEADERS);
-        res.end(JSON.stringify({ message: err.errors }));
+        const { code, errors } = err;
+
+        res.writeHead(code, HEADERS);
+        res.end(JSON.stringify({ message: errors }));
         return;
       }
 
@@ -88,9 +90,10 @@ export class Router {
       const route = trimSlash(rawRoute);
 
       // Find all route names from route and save in routeNames
-      const routeNames = route
-        .match(/\:([a-zA-Z0-9_.-]*)(:[^}]+)?/g)
-        ?.map((s) => s.replace(':', ''));
+      const routeNames: string[] = [];
+      for (const name of route.split('/')) {
+        if (name.startsWith(':')) routeNames.push(name.replace(':', ''));
+      }
 
       // Convert route name into regex pattern
       const routeRegex =
